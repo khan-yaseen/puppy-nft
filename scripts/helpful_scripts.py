@@ -1,7 +1,13 @@
 from brownie import accounts, network, config, VRFCoordinatorMock, LinkToken, Contract
+from web3 import Web3
 
 LOCAL_DEVELOPMENT_ENVIRONMENTS = [
-    "hardhat, ganache, mainnet-fork, mainnet-fork-dev, ganache-cli, development"
+    "hardhat",
+    "ganache",
+    "mainnet-fork",
+    "mainnet-fork-dev",
+    "ganache-cli",
+    "development",
 ]
 OPENSEA_URL = "https://testnets.opensea.io/assets/{}/{}"
 
@@ -24,6 +30,7 @@ def get_contract(contract_name):
         or a 'real' contract from live network.
     """
     contract_type = contract_to_mock[contract_name]
+    print(network.show_active())
     if network.show_active() in LOCAL_DEVELOPMENT_ENVIRONMENTS:
         if len(contract_type) <= 0:
             deploy_mocks()
@@ -50,6 +57,17 @@ def deploy_mocks():
     vrf_coordinator = VRFCoordinatorMock.deploy(link_token, {"from": account})
     print(f"VRFCoordinator deployed to {vrf_coordinator.address}")
     print("All done!")
+
+
+def fund_with_link(
+    contract_address, account=None, link_token=None, amount=Web3.toWei(0.25, "ether")
+):
+    account = account if account else get_account()
+    link_token = link_token if link_token else get_contract("link_token")
+    funding_tx = link_token.transfer(contract_address, amount, {"from": account})
+    funding_tx.wait(1)
+    print(f"Funded {contract_address}")
+    return funding_tx
 
 
 def get_account(id=None, index=None):
