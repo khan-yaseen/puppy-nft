@@ -24,7 +24,7 @@ def deploy_and_create():
     creating_tx.wait(1)
     print("New token has been created!")
 
-    return advanced_collectible
+    return advanced_collectible, creating_tx
 
 
 def main():
