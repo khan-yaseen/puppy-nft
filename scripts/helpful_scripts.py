@@ -10,8 +10,13 @@ LOCAL_DEVELOPMENT_ENVIRONMENTS = [
     "development",
 ]
 OPENSEA_URL = "https://testnets.opensea.io/assets/{}/{}"
+BREED_MAPPING = {0: "PUG", 1: "SHIBA_INU", 2: "ST_BERNARD"}
 
 contract_to_mock = {"vrf_coordinator": VRFCoordinatorMock, "link_token": LinkToken}
+
+
+def get_breed(breed_number):
+    return BREED_MAPPING[breed_number]
 
 
 def get_contract(contract_name):
