@@ -15,8 +15,8 @@ contract AdvancedCollectible is ERC721, VRFConsumerBase {
         ST_BERNARD
     }
     // Emit event whenever you update mappings
-    mapping(uint256 => Breed) tokenIdToBreed;
-    mapping(bytes32 => address) requestIdToSender;
+    mapping(uint256 => Breed) public tokenIdToBreed;
+    mapping(bytes32 => address) public requestIdToSender;
     event requestedCollectible(bytes32 indexed requestId, address requester); // "indexed" keyword just makes it easier to search for this event
     event breedAssigned(uint256 indexed tokenId, Breed breed);
 
