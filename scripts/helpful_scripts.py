@@ -30,7 +30,6 @@ def get_contract(contract_name):
         or a 'real' contract from live network.
     """
     contract_type = contract_to_mock[contract_name]
-    print(network.show_active())
     if network.show_active() in LOCAL_DEVELOPMENT_ENVIRONMENTS:
         if len(contract_type) <= 0:
             deploy_mocks()
